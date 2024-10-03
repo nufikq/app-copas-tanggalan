@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <title>Copas Tanggalan</title>
+</head>
+
+<body class="container my-4">
+    <h1 class="pricing-header p-3 pb-md-4 mx-auto text-center">Copas Tanggalan</h1>
+    <div class="text-center">
+        <span id="today" class="user-select-all shadow-sm p-3 mb-5 bg-body-tertiary rounded">hehe</span>
+        <br>
+        <button class="btn btn-primary px-4" onclick="copyToClipboard(today)">copas</button>
+    </div>
+    <script>
+        // copy to clipboard
+        function copyToClipboard() {
+            let val = document.getElementById("today").innerHTML;
+            const selBox = document.createElement('textarea');
+            selBox.style.position = 'fixed';
+            selBox.style.left = '0';
+            selBox.style.top = '0';
+            selBox.style.opacity = '0';
+            selBox.value = val;
+            document.body.appendChild(selBox);
+            selBox.focus();
+            selBox.select();
+            document.execCommand('copy');
+            document.body.removeChild(selBox);
+        }
+
+        var today = new Date();
+
+        // Hari Tanggal Bulan Tahun
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+        var day = today.getDay();
+        var daylist = ["Sunday", "Monday", "Tuesday", "Wednesday ", "Thursday", "Friday", "Saturday"];
+        var monthlist = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+        // Minggu ke berapa (error gak sesuai ekspektasi)
+        // currentDate = new Date();
+        // startDate = new Date(currentDate.getFullYear(), 0, 1);
+        // var days = Math.floor((currentDate - startDate) /
+        //     (24 * 60 * 60 * 1000));
+        // var weekNumber = Math.ceil(days / 7);
+
+        // Mendapatkan tanggal saat ini
+        var currentDate = new Date();
+
+        // Mendapatkan tanggal 1 di bulan yang sama dengan currentDate
+        var startOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+
+        // Menghitung selisih hari antara currentDate dan startOfMonth
+        var days = Math.floor((currentDate - startOfMonth) / (24 * 60 * 60 * 1000));
+
+        // Menghitung minggu ke berapa dalam bulan ini
+        var weekNumberInMonth = Math.ceil((days + startOfMonth.getDay() + 1) / 7);
+
+        // Penulisan Tanggal
+        var hari = String(daylist[day] + ". ");
+        var tanggal = String(monthlist[today.getMonth()] + " " + today.getDate() + ", " + today.getFullYear() + ". ");
+        var minggu = String("Week " + weekNumberInMonth + ".");
+        document.getElementById("today").innerHTML = hari + tanggal + minggu;
+
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous" />
+</body>
+
+</html>
